@@ -1,0 +1,28 @@
+{
+  "name": "part3",
+  "version": "1.0.0",
+  "description": "FullstackOpen Part 3 Backend",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev":"nodemon index.js",
+    "start":"node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lucasmckeon/fullstackopenpart3.git"
+  },
+  "author": "Lucas McKeon",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lucasmckeon/fullstackopenpart3/issues"
+  },
+  "homepage": "https://github.com/lucasmckeon/fullstackopenpart3#readme",
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
+}
