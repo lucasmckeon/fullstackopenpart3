@@ -1,4 +1,5 @@
 import express from 'express'
+import morgan from 'morgan'
 
 let phonebook = [
   { 
@@ -23,10 +24,22 @@ let phonebook = [
   }
 ]
 
-const PORT = 3001
+const PORT = process.env.PORT || 3001
 const app = express()
+//app.use(morgan('tiny'))
+app.use(morgan(function (tokens, req, res) {
+  const method = tokens.method(req, res)
+  return [
+    method,
+    tokens.url(req, res),
+    tokens.status(req, res),
+    tokens.res(req, res, 'content-length'), '-',
+    tokens['response-time'](req, res), 'ms',
+    method === 'POST' ? JSON.stringify(req.body) : null
+  ].join(' ')
+}))
 app.use(express.json())
-
+app.use(express.static('dist'))
 app.get('/',(request,response)=>{
   response.send("<h1>Phonebook</h1>")
 })
@@ -58,16 +71,12 @@ app.delete('/api/persons/:id',(request,response)=>{
   response.sendStatus(204)
 })
 
-//https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random#getting_a_random_integer_between_two_values
-function getRandomInt(min, max) {
-  const minCeiled = Math.ceil(min);
-  const maxFloored = Math.floor(max);
-  return Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled); // The maximum is exclusive and the minimum is inclusive
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max)
 }
 
-
 function generateId(){
-  const rand = getRandomInt(0,1000)
+  const rand = getRandomInt(1000)
   if(phonebook[rand]){
     return generateId()
   }
@@ -94,6 +103,11 @@ app.post('/api/persons',(request,response)=>{
   phonebook.push(person)
   response.json(person)
 })
+
+const unknownEndpoint = (request,response)=>{
+  response.status(404).send({error:'unknown endpoint'})
+}
+app.use(unknownEndpoint)
 
 app.listen(PORT,()=>{
   console.log("Started our app on port: " + PORT)

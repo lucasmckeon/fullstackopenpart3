@@ -5,8 +5,9 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev":"nodemon index.js",
-    "start":"node index.js",
+    "dev": "nodemon index.js",
+    "start": "node index.js",
+    "build:ui": "rm -rf dist && cd ../phonebook_frontend && npm run build && cp -r dist ../fullstackopen_phonebook",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -20,7 +21,8 @@
   },
   "homepage": "https://github.com/lucasmckeon/fullstackopenpart3#readme",
   "dependencies": {
-    "express": "^4.19.2"
+    "express": "^4.19.2",
+    "morgan": "^1.10.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.4"

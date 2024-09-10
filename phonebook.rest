@@ -21,3 +21,6 @@ Content-Type: application/json
   "name":"Arto Hellas",
   "number":12345
 }
+
+###
+GET http://localhost:3001/api/persons/
